@@ -1,0 +1,121 @@
+#!/bin/bash
+
+#	determine and set the image dir (BINARIES_DIR within buildroot env)
+#eval (make -s printvars VARS=BINARIES_DIR)		#	This was not working for me...not sure why
+BD=$HOME/Buildroot/buildroot-2021.05/output/images
+#BD=$BINARIES_DIR
+#echo "$BD is " $BD 
+
+#	make a pristine/original/backup copy of the rootfs.tar tarball
+cp $BD/rootfs.tar $BD/rootfs.tar.bkp
+
+#	define the config for creating the ubifs rootfs
+cat <<END >$BD/rootfs.cfg
+[ubifs]
+mode=ubi
+image=$BD/rootfs.ubifs
+vol_id=0
+vol_type=dynamic
+vol_name=rootfs
+vol_flags=autoresize
+END
+
+#	ubinize it to get the mtd2.img file which will be flashed to mtd2
+#	this is a generic rootfs for mtd2 that has no machine (machid) specific files in it
+ubinize -o $BD/rootfs-mtd2.img -m 2048 -p 128KiB -s 512 $BD/rootfs.cfg
+#		^^^^^^^^^^^^SANITIZE before sharing !!!!!!!!!!!!!!!!!!
+
+
+
+
+#	the mtd2.img file for all machid's is finalized; now get it ready
+#	for the USB images - take out the RO startup script that's appropriate
+#	only for UBIFS or JFFS.
+
+cd $BD
+tar --delete --file=$BD/rootfs.tar  ./etc/init.d/S05mountrootro
+tar --delete --file=$BD/rootfs.tar  ./etc/init.d/S49firstrun
+
+
+#	create a directory for /etc/issue files
+mkdir $BD/etc
+
+
+#	Kernel processing for all MACHID's and stamping the images
+#
+
+for	MACHID in `ls $BD/uImage* | xargs -n 1 basename | sed 's/uImage.//g'`
+do
+
+#echo "MACHID is "$MACHID
+
+#	make a rootfs USB tarball just for this MACHID
+cp	$BD/rootfs.tar $BD/rootfs-USB-$MACHID.tar
+
+#	convert kernel uImage.$MACHID to a mtd1 image, in BD
+dd if=$BD/uImage.$MACHID  of=$BD/uImage.$MACHID-mtd1.img bs=512K conv=sync
+
+#	make a /boot dir for the specific uImage that will boot that machine by USB/sda
+mkdir -p $BD/boot
+
+#	copy in the kernel uImage to the generic name uImage
+cp  $BD/uImage.$MACHID     $BD/boot/uImage
+
+#	append the /boot/uImage contents into the USB/sda rootfs
+cd  $BD
+tar --append --file=$BD/rootfs-USB-$MACHID.tar  ./boot/uImage
+
+#	create flash images dir and copy in the contents mtdN flash images for mtd{1,2}
+mkdir $BD/flash_images
+mv	$BD/uImage.$MACHID-mtd1.img    $BD/flash_images/uImage.$MACHID-mtd1.img
+cp	$BD/rootfs-mtd2.img            $BD/flash_images/rootfs-mtd2.img
+
+#	append flash_images/ contents to it also
+tar --append --file=$BD/rootfs-USB-$MACHID.tar  ./flash_images
+
+#	create a text tag-file with the MACHID and DATE in its filename, append that to the USB rootfs
+STAMP=$MACHID-`(date +'%F-%T' | sed  's/[:]//g')`
+echo $STAMP > $BD/$STAMP.txt
+tar --append --file=$BD/rootfs-USB-$MACHID.tar	./$STAMP.txt
+
+#	create a custom issue banner
+echo "                               "  >					$BD/etc/issue
+echo "============================================= " 	>>	$BD/etc/issue
+echo "Kirkwood SoC Rescue System"		>>					$BD/etc/issue
+echo $STAMP	     						>>					$BD/etc/issue
+echo "============================================= "	>>	$BD/etc/issue
+echo "                               "  >>					$BD/etc/issue
+
+
+#	and append it into the tarball
+tar --update --file=$BD/rootfs-USB-$MACHID.tar  ./etc/issue
+
+
+#	create dirs for the MACHID
+mkdir -p $BD/machs/$MACHID
+#echo $BD/machs/$MACHID
+
+#	mv them there
+mv  $BD/flash_images  			$BD/machs/$MACHID/flash_images
+mv  $BD/rootfs-USB-$MACHID.tar  $BD/machs/$MACHID/rootfs-USB-$MACHID.tar
+mv	$BD/$STAMP.txt				$BD/machs/$MACHID/$STAMP.txt
+
+
+
+#	house cleaning 
+rm -r $BD/boot
+
+done
+
+
+#	house cleaning
+rm	$BD/rootfs.cfg
+rm -r $BD/etc
+#	careful with that -f below!  if it fails, it does so quietly.
+rm  -f 	$BD/rootfs-mtd2.img
+#	and restore backup to original
+mv  $BD/rootfs.tar.bkp  $BD/rootfs.tar
+
+
+
+

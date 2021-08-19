@@ -1,0 +1,24 @@
+auto lo
+   iface lo inet loopback
+
+
+auto eth0
+   iface eth0 inet dhcp
+	pre-up  echo 'heartbeat' > /sys/class/leds/status\:orange\:fault/trigger
+	pre-up  sleep 3
+	post-up echo 'none' > /sys/class/leds/status\:orange\:fault/trigger
+   	post-up echo 'heartbeat' > /sys/class/leds/status\:green\:health/trigger
+ 	post-up sleep 3
+	post-up echo 'default-on' > /sys/class/leds/status\:green\:health/trigger 
+	down echo 'timer' > /sys/class/leds/status\:orange\:fault/trigger
+
+#  commands above match an old kernel version below are correct commands and
+#  possible values
+#  echo 'heartbeat' > /sys/class/leds/pogo_e02\:green\:health/trigger
+
+#cat /sys/class/leds/pogo_e02\:green\:health/trigger
+#none usb-gadget usb-host kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock f1072004.mdio-bus-mii:00:link f1072004.mdio-bus-mii:00:1Gbps f1072004.mdio-bus-mii:00:100Mbps f1072004.mdio-bus-mii:00:10Mbps usbport timer oneshot disk-activity disk-read disk-write ide-disk mtd nand-disk [heartbeat] gpio default-on panic
+
+#cat /sys/class/leds/pogo_e02\:orange\:fault/trigger
+#[none] usb-gadget usb-host kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock f1072004.mdio-bus-mii:00:link f1072004.mdio-bus-mii:00:1Gbps f1072004.mdio-bus-mii:00:100Mbps f1072004.mdio-bus-mii:00:10Mbps usbport timer oneshot disk-activity disk-read disk-write ide-disk mtd nand-disk heartbeat gpio default-on panic
+

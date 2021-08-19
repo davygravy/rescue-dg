@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+#  /etc/init.d/S49firstrun-sshd
+#  Firstrun script : mounts rootfs RW, creates ssdh keys 
+#  disables itself and remounts rootfs RO.  Disabling  occurs by
+#  renaming itself to /etc/init.d/disabledS49firstrun-sshd.
+#  
+#  Note: this should run after ntpd starts, but before sshd,
+#  so that the keys are correctly timestamped.
+
+echo "Firstrun: remounting filesystem read-write"
+mount -o rw,remount /
+
+# test for internet connection (so that ntpd has probably set time)
+# and wait an extra 10 seconds in case ping fails, then give up...
+ping  -c 3 -w 3 8.8.8.8 >& /dev/null || sleep 10
+
+
+# Make sure the ssh-keygen progam exists
+[ -f /usr/bin/ssh-keygen ] || exit 0
+
+umask 077
+
+
+
+# Create the SSH keys
+	/usr/bin/ssh-keygen -A
+
+#	disable the script after the first run
+mv /etc/init.d/S49firstrun-sshd  /etc/init.d/disabledS49firstrun-sshd
+
+
+#	is this mount and ubi, and is it RW currently? If so, remount it RO
+( mount | head -1 | grep -e 'ubi' | grep -qe '(rw' )
+if [ $? -eq 0 ]; then
+	mount -o ro,remount /
+	echo "Firstrun: remounting ubi:rootfs as read-only"
+fi
+
+
+

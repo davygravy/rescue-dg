@@ -1,0 +1,46 @@
+#!/bin/sh
+#	
+#	S49zdropbear-firstrun
+#	
+#	Must run after ntp sets time at initial boot, but before dropbear starts
+#	This lessens the likelihood of non-sane timestamps on the dropbear keys
+#	It disables itself only if the dropbear keys have been generated and
+#	stored at /etc/dropbear/
+#	
+	
+
+[ -x  /usr/bin/dropbearkey ] || ( echo "/usr/bin/dropbearkey not found"; exit 0 )
+
+case "$1" in
+	start)
+		echo "Firstrun: remounting filesystem read-write"
+		mount -o rw,remount /
+		sleep 2
+
+		# test for internet connection (so that ntpd has likely set network time)
+		# and wait an extra 15 seconds in case not, then give up...
+		( ping  -c 3 -w 3 8.8.8.8 >& /dev/null && echo "inet connection OK" ; echo date is `(date)` ) || echo "inet connection not OK, waiting 10 more sec" ; sleep 10
+		#	make sure that /etc/dropbear exists as a directory (not a symlink to /run/...)
+		[ -h "/etc/dropbear" ] &&  rm -r /etc/dropbear
+		[ -d "/etc/dropbear" ] || mkdir -p /etc/dropbear
+		echo "Generating host ssh keys for dropbear on this host"
+		dropbearkey -t ecdsa -f /etc/dropbear/dropbear_ecdsa_host_key
+		dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+		dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
+		[ $? = 0 ] && mv /etc/init.d/S49zdropbear-firstrun  /etc/init.d/disabledS49zdropbear-firstrun
+
+		#   If / is ubi and also rw, then remount it as ro
+		( mount | head -1 | grep -e 'ubi' | grep -qe '(rw' )
+		if [ $? -eq 0 ]; then
+		    mount -o ro,remount /
+		    echo "Firstrun: remounted ubi:rootfs as read-only"
+		fi
+		;;
+	stop)
+		;;
+	*)
+		echo "Usage: $0 {start|stop}"
+		;;
+esac
+
+exit $?

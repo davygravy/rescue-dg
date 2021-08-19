@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# 	prep dropbear logging
+#	S49dropbearlogprep
+#	Note: we have buildroot set for dropbear
+#	to use wtmp at /tmp/wtmp ( /var/log -> /tmp as symlink )
+#	Also, note that dropbear starts with
+#	/etc/init.d/S50dropbear, hence S49 for prep.
+
+case "$1" in
+  start)
+        touch /var/log/wtmp
+        ;;
+  stop)
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
