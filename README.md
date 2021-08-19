@@ -54,7 +54,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     wget https://github.com/buildroot/buildroot/archive/refs/tags/2021.05.tar.gz
     tar xzvf buildroot-2021.05.tar.gz
     cd buildroot-2021.05
-    wget rescue-dg.tar.gz
+    wget https://github.com/davygravy/rescue-dg/archive/refs/heads/main.zip
     ln custom-rs/buildroot-rs-config  .config
     chmod +x custom-rs/post-processv3.sh
     make
