@@ -42,28 +42,32 @@ mtd-utils geany`
 
 
 
-*Note*:  I was in sudoers group, but still had to add `/usr/sbin` to
+__Note__:  I was in sudoers group, but still had to add `/usr/sbin` to
 my path so that `ubinize` would be called correctly (see `custom-rs/post-processv3.sh`
-script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.
+script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH=/usr/sbin:$PATH` , followed directly by executing `ubinize` with operands, worked for me.
 
 
 
 
-    mkdir $HOME/BUILDROOT
-    cd $HOME/BUILDROOT
+    mkdir $HOME/Buildroot
+    cd $HOME/Buildroot
     wget https://github.com/buildroot/buildroot/archive/refs/tags/2021.05.tar.gz
     tar xzvf 2021.05.tar.gz
     cd buildroot-2021.05
     wget https://github.com/davygravy/rescue-dg/archive/refs/heads/main.zip
     unzip main.zip
-    mv rescue-dg-main/custom-rs .
+    mv rescue-dg-main/custom-rs .F
     rm -r rescue-dg-main/
     ln custom-rs/buildroot-rs-config  .config
     chmod +x custom-rs/post-processv3.sh
+    make menuconfig  # as a sanity check for paths, or if you want turn on any other machids.
+                     # you can find machids of many different kirkwood boxes with this command
+                     #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
+                     # the machid/name is entered in Kernel > "In-tree Device Tree Source file names"
     make
 
 
-Build time with a 3.6GHz quad-core Debian box is a litle over an hour.
+If you change the location/naming of your directories, then you'll have to be cautious about changing the file paths in most/many/all of the configs.  Build time with a 3.6GHz quad-core Debian box is a litle over an hour.  
 
 Binaries and tarballs will be in `output/images`. The script `post-processv3.sh` will create a directory in `output/images/machid` for each machine variant, e.g. `pogo_e02`, `pogoplug_series_4`, etc.
 
