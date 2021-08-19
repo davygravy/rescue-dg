@@ -50,11 +50,14 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
 
 
     mkdir $HOME/BUILDROOT
-    cd BUILDROOT
+    cd $HOME/BUILDROOT
     wget https://github.com/buildroot/buildroot/archive/refs/tags/2021.05.tar.gz
-    tar xzvf buildroot-2021.05.tar.gz
+    tar xzvf 2021.05.tar.gz
     cd buildroot-2021.05
     wget https://github.com/davygravy/rescue-dg/archive/refs/heads/main.zip
+    unzip main.zip
+    mv rescue-dg-main/custom-rs .
+    rm -r rescue-dg-main/
     ln custom-rs/buildroot-rs-config  .config
     chmod +x custom-rs/post-processv3.sh
     make
