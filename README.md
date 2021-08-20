@@ -1,18 +1,19 @@
 # rescue-dg
 
 **rescue-dg** is bootable root file system for Kirkwood SoC devices,
-residing in NAND flash, produced using Buildroot-2021.05
-
-Built from scratch, against buildroot-2021.05. 
+residing in NAND flash, produced with Buildroot-2021.05, and built
+completely from scratch.  It has a variety of utilities and apps in it for
+setting up SATA/USB/MMC storage, networking, uboot environment, backup
+of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
 
 Tested on/supports four machine types/machids:
 - Pogoplug V2 (aka Pink,though I have a gray V2)
 - Pogoplug V4/Mobile (with and without SATA port)
 - Seagate GoFlexHome/GoFlexNet (counting these as one type)
-- Zyxel NAS-320 2-bay NSA
+- Zyxel NAS-320 2-bay NAS 
 
  
-Uses linux 5.6.5, minimized for kernel/uImage size, culled hardware unlikely to be connected to a Kirkwood device during rescue/setup.
+Uses linux 5.6.5, minimized for kernel/uImage size.
 Utilities include:
  - network utilities and apps: dropbear, ntpd, wget(https-capable)
  - fdisk and gdisk
