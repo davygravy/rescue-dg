@@ -59,16 +59,14 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     unzip main.zip
     mv rescue-dg-main/custom-rs .
     rm -r rescue-dg-main/
-    ln custom-rs/buildroot-rs-config  .config        # re-create this symlink if you make clean
+    cp custom-rs/buildroot-rs-config  .config        
     cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config  
     chmod +x custom-rs/post-processv3.sh
-    make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids.
+    make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids that you want to build.
                      # You can find machids of many different kirkwood boxes with this command
                      #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
                      # The machid/name is entered in Kernel > "In-tree Device Tree Source file names"
     make # creates the rootfs and kernel
-    rm -r output/build/linux-5.6.5 output/build/buildroot-fs/   # triggers the necessary rebuild of kernel and rootfs
-    make # creates a ubi and ubifs image
 
 
 If you change the location/naming of your directories, then you'll have to be cautious about changing the file paths in most/many/all of the configs.  Build time with a 3.6GHz quad-core Debian box is a litle over an hour.  
