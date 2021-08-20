@@ -15,7 +15,7 @@ Tested on/supports four machine types/machids:
  
 Uses linux 5.6.5, minimized for kernel/uImage size.
 Utilities include:
- - network : dropbear, ntpd, wget(https-capable), scp
+ - network : dropbear, ntpd, wget (https-capable), scp
  - fdisk, gdisk; lsblk, blkid, etc. Support for GPT
  - e2fsprogs (not the busybox version)
  - mtd-utils (nandwrite, ubi*, etc)
@@ -63,7 +63,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     cp custom-rs/buildroot-rs-config  .config        
     cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config  
     chmod +x custom-rs/post-processv3.sh
-    nano custom-rs/post-processv3.sh # change any absolute paths to agree w/ your $HOME
+    nano custom-rs/post-processv3.sh # change any absolute paths to agree w/ your $HOME and build location!
     make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids that you want to build.
                      # You can find machids of many different kirkwood boxes with this command
                      #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
@@ -75,10 +75,10 @@ If you change the location/naming of your directories, then you'll have to be ca
 
 Binaries and tarballs will be in `output/images`. The script `post-processv3.sh` will create a directory in `output/images/machid` for each machine variant, e.g. `pogo_e02`, `pogoplug_series_4`, etc.
 
-The *kernels* (uImage.mtd1.img) have the dtb appended to them, and as such, are machine-specific.  This simplifies the testing and flashing of the images, and does not require the installer to make large changes to the uboot environment.
+The `uImage.kirkwood.<machid>.mtd1.img` (*kernels*) have the dtb appended to them, and as such, are machine-specific.  This simplifies the testing and flashing of the images, and does not require the installer to make large changes to the uboot environment.
 
-The *rootfs.mtd2.img* are identical for all machids.
+The `rootfs-mtd2.img` (*root filesystem*) are identical for all machids.
 
-The `rootfs-USB-kirkwood-<machid>.tar` tarballs are supplied so that you can boot your machine on these first, and test both the kernel and the rootfs on your machine, before flashing in the contents of /flash_images/. They have essentially the same rootfs as the mtd2.img files, and also contain `/boot/uImage` for that machid, as well as the `/flash_images/*.img` files which are for flashing to NAND.  This way, you can try before you buy, so to speak.  __It is strongly advised that you use the rootfs-USB-kirkwood-<machid>.tar tarball rootfs to test the system on yours machine before flashing.__   
+__Everything you need, though, is in the `rootfs-USB-kirkwood-<machid>.tar` tarballs.__ These contain essentially the same contents as the `rootfs-mtd2.img`, plus `/boot/uImage` for that machid, and `/flash_images/*.img`. The idea is to boot the USB roots w/ kernel as a test on your machine.  After you are satisfied with function of the kernel and rootfs, you can just `cd` to  `/flash_images/`, and then flash to NAND.  This way, you can try before you buy, so to speak.  __It is strongly advised that you use the rootfs-USB-kirkwood-\<machid>.tar tarball rootfs to test the system on your machine before flashing.__   
 
 The wiki section has a disclaimer and bare-bones directions for uboot changes, testing, and installation to flash.
