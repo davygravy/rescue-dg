@@ -62,6 +62,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     cp custom-rs/buildroot-rs-config  .config        
     cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config  
     chmod +x custom-rs/post-processv3.sh
+    nano custom-rs/post-processv3.sh # change any absolute paths to agree w/ your $HOME
     make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids that you want to build.
                      # You can find machids of many different kirkwood boxes with this command
                      #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
@@ -69,7 +70,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     make # creates the rootfs and kernel
 
 
-If you change the location/naming of your directories, then you'll have to be cautious about changing the file paths in most/many/all of the configs.  Build time with a 3.6GHz quad-core Debian box is a litle over an hour.  
+If you change the location/naming of your directories, then you'll have to be cautious about changing the file paths in the configs and {post,pre}-process scripts.  Build time with a 3.6GHz quad-core Debian box is a litle over an hour.  
 
 Binaries and tarballs will be in `output/images`. The script `post-processv3.sh` will create a directory in `output/images/machid` for each machine variant, e.g. `pogo_e02`, `pogoplug_series_4`, etc.
 
