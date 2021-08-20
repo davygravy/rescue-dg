@@ -79,6 +79,6 @@ The *kernels* (uImage.mtd1.img) have the dtb appended to them, and as such, are 
 
 The *rootfs.mtd2.img* are identical for all machids.
 
-The `usb-rescue-<machid>.tar` tarballs have essentially the same rootfs as the mtd2.img files, but also contain `/boot/uImage` for that machid, as well as the `/flash-images/*.img` files which are for flashing to NAND.
+The `rootfs-USB-kirkwood-<machid>.tar` tarballs are supplied so that you can boot your machine on these first, and test both the kernel and the rootfs on your machine, before flashing in the contents of /flash_images/. They have essentially the same rootfs as the mtd2.img files, and also contain `/boot/uImage` for that machid, as well as the `/flash_images/*.img` files which are for flashing to NAND.  This way, you can try before you buy, so to speak.  __It is strongly advised that you use the rootfs-USB-kirkwood-<machid>.tar tarball rootfs to test the system on yours machine before flashing.__   
 
 The wiki section has a disclaimer and bare-bones directions for uboot changes, testing, and installation to flash.
