@@ -15,11 +15,11 @@ Tested on/supports four machine types/machids:
  
 Uses linux 5.6.5, minimized for kernel/uImage size.
 Utilities include:
- - network utilities and apps: dropbear, ntpd, wget(https-capable)
- - fdisk and gdisk
+ - network : dropbear, ntpd, wget(https-capable), scp
+ - fdisk, gdisk; lsblk, blkid, etc. Support for GPT
  - e2fsprogs (not the busybox version)
  - mtd-utils (nandwrite, ubi*, etc)
- -ntfs and dosfs utils
+ - ntfs and dosfs utils
  - nfs utils
  - ddrescue
  - rsync
@@ -27,6 +27,7 @@ Utilities include:
  - avahi (device will advertise ssh service by its name rescue.local)
  - screen
  - busybox (with a wide array of functions)
+ - uboot suoport: fw_{print,set}env; bodhi's uboot.2016.05-tld-1.environment.* files in /usr/share/uboot/
  - aliases:
      - ll=ls -lna
      - rmtrw={remount rootfs as rw}
