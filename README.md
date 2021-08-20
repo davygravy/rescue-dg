@@ -56,7 +56,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     cd buildroot-2021.05
     wget https://github.com/davygravy/rescue-dg/archive/refs/heads/main.zip
     unzip main.zip
-    mv rescue-dg-main/custom-rs .F
+    mv rescue-dg-main/custom-rs .
     rm -r rescue-dg-main/
     ln custom-rs/buildroot-rs-config  .config
     chmod +x custom-rs/post-processv3.sh
