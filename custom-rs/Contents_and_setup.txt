@@ -5,10 +5,12 @@ Place the directory custom-rs/* in the buildroot-20xx.yy directory
 Create symlink in buildroot-20xx.yy that points to buildroot-rs-config
 	cd /path/to/buildroot-20xx.yy/
 	ln custom-rs/buildroot-rs-config .config
+	# or just copy it instead of symlinking... though symlinking allows
+	#     altering your config and keeping the custom-rs/ copy up to date
 
 Other contents are:
 	- linux kernel config : linux-kirkwood-dgrs-5.6.5.config
 		this represents an size-optimized kernel with extra capabilities built as modules.  uImage is around 3.6MB
-	- busybox_v1.33.0.config
+	- busybox_v1.33.0.config (cp to package/busybox/busybox.conig )
 	- overlay directory w/ crucial fs-skeleton additions/changes
 	- post-processv3.sh script to package images for easy deployment

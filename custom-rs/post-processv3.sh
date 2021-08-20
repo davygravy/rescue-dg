@@ -119,7 +119,7 @@ done
 rm	$BD/rootfs.cfg
 rm -r $BD/etc
 rm -r $BD/boot
-rm -r $BD/flash-images
+rm -r $BD/flash_images
 #	careful with that -f below!  if it fails, it does so quietly.
 rm  -f 	$BD/rootfs-mtd2.img
 #	and restore backup to original
