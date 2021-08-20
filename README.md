@@ -59,11 +59,12 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     mv rescue-dg-main/custom-rs .
     rm -r rescue-dg-main/
     ln custom-rs/buildroot-rs-config  .config
+    cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config
     chmod +x custom-rs/post-processv3.sh
-    make menuconfig  # as a sanity check for paths, or if you want turn on any other machids.
-                     # you can find machids of many different kirkwood boxes with this command
+    make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids.
+                     # You can find machids of many different kirkwood boxes with this command
                      #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
-                     # the machid/name is entered in Kernel > "In-tree Device Tree Source file names"
+                     # The machid/name is entered in Kernel > "In-tree Device Tree Source file names"
     make
 
 
