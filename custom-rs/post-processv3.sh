@@ -1,10 +1,17 @@
 #!/bin/bash
 
-#	determine and set the image dir (BINARIES_DIR within buildroot env)
-#eval (make -s printvars VARS=BINARIES_DIR)		#	This was not working for me...not sure why
-BD=$HOME/Buildroot/buildroot-2021.05/output/images
-#BD=$BINARIES_DIR
-#echo "$BD is " $BD 
+#   Set up for relative paths:
+#	 (BINARIES_DIR within buildroot env did not work for me)
+#eval (make -s printvars VARS=BINARIES_DIR)		#  Also didn't work; not sure why
+#  Immediate working directory is this one; define the Binaries Directory
+IWD=$(pwd)
+echo IWD=$IWD
+BD=$IWD/output/images
+echo BD=$BD 
+
+#	delete any old machs/ content
+
+rm -r $BD/machs
 
 #	make a pristine/original/backup copy of the rootfs.tar tarball
 cp $BD/rootfs.tar $BD/rootfs.tar.bkp
