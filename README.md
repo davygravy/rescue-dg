@@ -63,9 +63,7 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     rm -r rescue-dg-main/
     cp custom-rs/buildroot-rs-config  .config        
     cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config  
-    chmod +x custom-rs/post-processv3.sh
-    chomd +x custom-rs/pre-process.sh
-    nano custom-rs/post-processv3.sh # change any absolute paths to agree w/ your $HOME and build location!
+    nano custom-rs/post-processv3.sh # check over paths 
     # the above might not be necessary since I tried to enable relative paths
     # careful here below... 
     which ubinize  # if you can't see ubinize as a sudoer, then add its parent directory to your path
