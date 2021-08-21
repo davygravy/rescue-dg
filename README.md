@@ -6,11 +6,12 @@ completely from scratch.  It has a variety of utilities and apps in it for
 setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
 
-Tested on/supports four machine types/machids:
+Tested on/supports four machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
 - Pogoplug V4/Mobile (with and without SATA port)
-- Seagate GoFlexHome/GoFlexNet (counting these as one type)
-- Zyxel NAS-320 2-bay NAS 
+- Seagate GoFlexHome
+- Zyxel NAS-320 2-bay NAS
+-  ? Will your machine type be next? 
 
  
 Uses linux 5.6.5, minimized for kernel/uImage size.
@@ -44,9 +45,9 @@ mtd-utils geany`
 
 
 
-__Note__:  I was in sudoers group, but still had to add `/usr/sbin` to
+__Note__:  I was in sudoers group, but `which ubinize` yielded nothing.  I had to add `/usr/sbin` to
 my path so that `ubinize` would be called correctly (see `custom-rs/post-processv3.sh`
-script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH=/usr/sbin:$PATH` , followed directly by executing `ubinize` without any operands, worked for me.
+script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH="/usr/sbin:$PATH"` worked for me.
 
 
 
@@ -63,7 +64,12 @@ script).  `ubinize` is in the mtd-utils package and is essential for converting 
     cp custom-rs/buildroot-rs-config  .config        
     cp custom-rs/busybox_v1.33.0.config package/busybox/busybox.config  
     chmod +x custom-rs/post-processv3.sh
+    chomd +x custom-rs/pre-process.sh
     nano custom-rs/post-processv3.sh # change any absolute paths to agree w/ your $HOME and build location!
+    # the above might not be necessary since I tried to enable relative paths
+    # careful here below... 
+    which ubinize  # if you can't see ubinize as a sudoer, then add its parent directory to your path
+    #  export PATH="/usr/sbin:$PATH" ; echo $PATH # look for /usr/sbin in your path...
     make menuconfig  # Do a thorough sanity check for file paths; Turn on any other machids that you want to build.
                      # You can find machids of many different kirkwood boxes with this command
                      #   grep -e 'kirkwood-' output/build/linux-5.6.5/arch/arm/boot/dts/*
