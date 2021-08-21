@@ -6,11 +6,12 @@ completely from scratch.  It has a variety of utilities and apps in it for
 setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
 
-Tested on/supports four machine types/machids:
+Tested on/supports four machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
 - Pogoplug V4/Mobile (with and without SATA port)
-- Seagate GoFlexHome/GoFlexNet (counting these as one type)
-- Zyxel NAS-320 2-bay NAS 
+- Seagate GoFlexHome
+- Zyxel NAS-320 2-bay NAS
+-  ? Will your machine type be next? 
 
  
 Uses linux 5.6.5, minimized for kernel/uImage size.
