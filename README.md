@@ -44,9 +44,9 @@ mtd-utils geany`
 
 
 
-__Note__:  I was in sudoers group, but still had to add `/usr/sbin` to
+__Note__:  I was in sudoers group, but `which ubinize` yielded nothing.  I had to add `/usr/sbin` to
 my path so that `ubinize` would be called correctly (see `custom-rs/post-processv3.sh`
-script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH=/usr/sbin:$PATH` , followed directly by executing `ubinize` without any operands, worked for me.
+script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH="/usr/sbin:$PATH"` worked for me.
 
 
 
