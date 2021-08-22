@@ -31,7 +31,7 @@ Utilities include:
  - `busybox` (with a wide array of functions)
  - uboot support: `fw_{print,set}env`; bodhi's `uboot.2016.05-tld-1.environment.*` files in `/usr/share/uboot/`
  - aliases:
-     - ll=ls -lna
+     - `ll`= `ls -lna`
      - `rmtrw`={remount rootfs as rw}
      - `rmtro`={remount rootfs as ro}
  - ...lots more...
