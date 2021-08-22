@@ -5,6 +5,7 @@ residing in NAND flash, produced with Buildroot-2021.05, and built
 completely from scratch.  It has a variety of utilities and apps in it for
 setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
+It also make an excellent, fast and lightweight base for running [Entware](https://github.com/Entware/Entware/wiki)
 
 Tested on/supports four machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
@@ -47,7 +48,7 @@ mtd-utils geany`
 
 __Note__:  I was in sudoers group, but `which ubinize` yielded nothing.  I had to add `/usr/sbin` to
 my path so that `ubinize` would be called correctly (see `custom-rs/post-processv3.sh`
-script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH="/usr/sbin:$PATH"` worked for me.
+script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me,something like `export PATH="/usr/sbin:$PATH"` worked, along with a simple invocation of `ubinize` just to test it.
 
 
 
