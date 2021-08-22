@@ -5,7 +5,7 @@ residing in NAND flash, produced with Buildroot-2021.05, and built
 completely from scratch.  It has a variety of utilities and apps in it for
 setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
-It also make an excellent, fast and lightweight base for running [Entware](https://github.com/Entware/Entware/wiki)
+It also makes an excellent, fast and lightweight base for running [Entware](https://github.com/Entware/Entware/wiki)
 
 Tested on/supports four machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
