@@ -9,10 +9,12 @@ It also makes an excellent, fast and lightweight base for running [Entware](http
 
 Tested on/supports four machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
-- Pogoplug V4/Mobile (with and without SATA port)
+- Pogoplug V4 (without SATA port)
 - Seagate GoFlexHome
 - Zyxel NAS-320 2-bay NAS
 -  ? Will your machine type be next? 
+
+See __Releases__ for current available downloads: look for __Assets__ at bottom of any release page.
 
  
 Uses linux 5.6.5, minimized for kernel/uImage size.
@@ -36,7 +38,7 @@ Utilities include:
      - `rmtro`={remount rootfs as ro}
  - ...lots more...
 
-  
+
 ---  
 # Setting up and building it:
 
