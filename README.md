@@ -47,7 +47,7 @@ Utilities include:
 ### Setup for building it:
 
 Fulfill the basic requirements stated on the Buildroot site. On a fresh Debian 10 install, I added:
-`apt install build-essential git rsync ncurses-dev libssl-dev
+`apt install build-essential bc git rsync ncurses-dev libssl-dev
 mtd-utils geany`
 
 
