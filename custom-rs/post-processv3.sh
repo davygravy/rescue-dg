@@ -22,8 +22,10 @@ cat <<END >$BD/rootfs.cfg
 mode=ubi
 image=$BD/rootfs.ubifs
 vol_id=0
+vol_size=31MiB
 vol_type=dynamic
 vol_name=rootfs
+vol_alignment=1
 vol_flags=autoresize
 END
 
