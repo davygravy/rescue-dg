@@ -24,9 +24,10 @@ See __[Releases](https://github.com/davygravy/rescue-dg/releases)__ for current 
 Uses linux 5.6.5, minimized for kernel/uImage size.
 Utilities include:
  - network : `dropbear`, `ntpd`, `wget` (https-capable), `scp`
+ - crypto and email: `msmtp`, `gnutls`, `ca-certificates`
  - `fdisk`, `gdisk`; `lsblk`, `blkid`, etc.; Support for GPT
  - e2fsprogs (not the busybox version)
- - mtd-utils (`nandwrite`, ubi*, etc)
+ - mtd-utils (`nandwrite`, `ubi*`, etc)
  - ntfs and dosfs utils
  - nfs utils
  - `ddrescue`
@@ -47,8 +48,7 @@ Utilities include:
 ### Setup for building it:
 
 Fulfill the basic requirements stated on the Buildroot site. On a fresh Debian 10 install, I added:
-`apt install build-essential bc git rsync ncurses-dev libssl-dev
-mtd-utils geany`
+`apt install build-essential bc git rsync ncurses-dev libssl-dev mtd-utils geany`
 
 
 __Note__:  I was in sudoers group, but `which ubinize` yielded nothing.  I had to add `/usr/sbin` to my path so that `ubinize` would be called correctly (see `custom-rs/post-processv3.sh` script).  `ubinize` is in the mtd-utils package and is essential for converting the raw `rootfs.tar` to a ubifs format.  For me, something like `export PATH="/usr/sbin:$PATH"` worked, along with a simple invocation of `ubinize` just to test it.
@@ -94,4 +94,4 @@ __Everything you need, though, is in the `rootfs-USB-kirkwood-<machid>.tar` tarb
 ---
 ### Testing and Installation on your device
 
-The wiki section has a disclaimer and bare-bones directions for uboot changes, testing, and installation to flash.
+The wiki section has a disclaimer and bare-bones directions for [uboot changes, testing, and installation to flash](https://github.com/davygravy/rescue-dg/wiki/Testing-and-Flashing).  Flash at your own risk... read fully and test before you flash.
