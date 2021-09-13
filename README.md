@@ -10,7 +10,7 @@ It also makes an excellent, fast and lightweight base for running [Entware](http
 Tested on/supports five machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
 - Pogoplug V4 (without SATA port)
-- Seagate GoFlexHome/FreeAgent-GoFlexHome (the two devices use the same image tarball)
+- Seagate GoFlexHome/FreeAgent-GoFlexNet (the two devices use the same image tarball)
 - Zyxel NAS-320 2-bay NAS
 -  ? Will your machine type be next? 
 ---
