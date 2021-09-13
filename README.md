@@ -7,10 +7,10 @@ setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
 It also makes an excellent, fast and lightweight base for running [Entware](https://github.com/Entware/Entware/wiki).
 
-Tested on/supports four machine types/machids (so far):
+Tested on/supports five machine types/machids (so far):
 - Pogoplug V2 (aka Pink,though I have a gray V2)
 - Pogoplug V4 (without SATA port)
-- Seagate GoFlexHome
+- Seagate GoFlexHome/FreeAgent-GoFlexHome (the two devices use the same image tarball)
 - Zyxel NAS-320 2-bay NAS
 -  ? Will your machine type be next? 
 ---
