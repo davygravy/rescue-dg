@@ -7,7 +7,7 @@ setting up SATA/USB/MMC storage, networking, uboot environment, backup
 of data (rsync), cloning (dd) and recovering drive contents (ddrescue).
 It also makes an excellent, fast and lightweight base for running [Entware](https://github.com/Entware/Entware/wiki).
 
-Tested on/supports five machine types/machids (so far):
+Tested on/supports six machine types/machids (so far):
 - Pogoplug V2 (aka Pink/Gray or pogo_e02)
 - Pogoplug V4 (without SATA port)
 - Seagate Dockstar (FreeAgent Dockstar)
