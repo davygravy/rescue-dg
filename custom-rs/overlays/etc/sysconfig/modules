@@ -1,0 +1,6 @@
+#
+#		modules to be loaded by /etc/init.d/S11modules-load
+#		
+#
+#dm9601
+leds-gpio

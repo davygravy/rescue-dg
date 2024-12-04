@@ -1,0 +1,66 @@
+# Inputs:       $1 is the message
+#               $2 is the colorcode for the console
+#
+# Outputs:      Standard Output
+#
+# Dependencies: - sed for parsing strings.
+#            - grep for counting string length.
+#
+# Todo:
+#*******************************************************************************
+boot_mesg()
+{
+    local ECHOPARM=""
+
+    while true
+    do
+        case "${1}" in
+            -n)
+                ECHOPARM=" -n "
+                shift 1
+                ;;
+            -*)
+                echo "Unknown Option: ${1}"
+                return 1
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+
+    ## Figure out the length of what is to be printed to be used
+    ## for warning messages.
+    STRING_LENGTH=$((${#1} + 1))
+
+    # Print the message to the screen
+    ${ECHO} ${ECHOPARM} -e "${2}${1}"
+
+}
+
+boot_mesg_flush()
+{
+    # Reset STRING_LENGTH for next message
+    STRING_LENGTH="0"
+}
+
+echo_ok()
+{
+    ${ECHO} -n -e "${CURS_UP}${SET_COL}${BRACKET}[${SUCCESS}  OK  ${BRACKET}]"
+    ${ECHO} -e "${NORMAL}"
+        boot_mesg_flush
+}
+
+echo_failure()
+{
+    ${ECHO} -n -e "${CURS_UP}${SET_COL}${BRACKET}[${FAILURE} FAIL ${BRACKET}]"
+    ${ECHO} -e "${NORMAL}"
+        boot_mesg_flush
+}
+
+echo_warning()
+{
+    ${ECHO} -n -e "${CURS_UP}${SET_COL}${BRACKET}[${WARNING} WARN ${BRACKET}]"
+    ${ECHO} -e "${NORMAL}"
+        boot_mesg_flush
+}
