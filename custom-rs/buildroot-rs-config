@@ -526,7 +526,7 @@ BR2_LINUX_KERNEL_UIMAGE_LOADADDR="0x8000"
 BR2_LINUX_KERNEL_DTS_SUPPORT=y
 BR2_LINUX_KERNEL_DTB_IS_SELF_BUILT=y
 BR2_LINUX_KERNEL_APPENDED_DTB=y
-BR2_LINUX_KERNEL_INTREE_DTS_NAME="kirkwood-nsa320 kirkwood-pogo_e02 kirkwood-goflexnet kirkwood-pogoplug-series-4 kirkwood-sheevaplug kirkwood-dockstar"
+BR2_LINUX_KERNEL_INTREE_DTS_NAME="kirkwood-nsa320 kirkwood-pogo_e02 kirkwood-goflexnet kirkwood-pogoplug_v4 kirkwood-dockstar"
 BR2_LINUX_KERNEL_CUSTOM_DTS_PATH="$(@D)/arch/arm/boot/dts/marvell/*"
 # BR2_LINUX_KERNEL_DTB_KEEP_DIRNAME is not set
 # BR2_LINUX_KERNEL_DTB_OVERLAY_SUPPORT is not set
