@@ -1,4 +1,5 @@
 Contents and setup - custom-rs/
+READ ME   READ ME 
 
 Place the directory custom-rs/* in the buildroot-20xx.yy directory
 
@@ -7,6 +8,7 @@ Create symlink in buildroot-20xx.yy that points to buildroot-rs-config
 	ln custom-rs/buildroot-rs-config .config
 	# or just copy it instead of symlinking... though symlinking allows
 	#     altering your config and keeping the custom-rs/ copy up to date
+	READ create symlink from kernel patch to linux build dir in BR
 
 Other contents are:
 	- linux kernel config : linux-kirkwood-dgrs-5.6.5.config
@@ -14,3 +16,9 @@ Other contents are:
 	- busybox_v1.33.0.config (cp to package/busybox/busybox.conig )
 	- overlay directory w/ crucial fs-skeleton additions/changes
 	- post-processv3.sh script to package images for easy deployment
+
+Update:
+	- kernel config, leaner, compressed : linux-kirkwood-dgrs-6.11.6.config
+	- patch from bodhi for pinctrl fixup, updates : 0100-lin6116-kirkwood-tld-1.patch
+	- leaner buildroot config w kernel/module compression
+	- fixups for dtb location, dropped machids, obsoletes
